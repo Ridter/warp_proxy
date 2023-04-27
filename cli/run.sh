@@ -50,7 +50,8 @@ function reconnect_warp() {
     done
     # 如果连接成功，等待 wait_time 分钟后再次尝试
     if [[ $(echo "$status" | grep -c "Status update: Connected") -eq 1 ]]; then
-        log INFO "connection succeeded"
+        current_ip=$(curl -x socks5://127.0.0.1:1080 -ksm8 -A Mozilla https://api.ip.sb/geoip | grep -oP '(?<="ip":")[^"]+' | sed 's/\\//g')
+        log INFO "connection succeeded ! IP: $current_ip"
         sleep $(($wait_time * 60))
     else
         # 如果连接失败，等待10秒后重试
