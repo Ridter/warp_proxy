@@ -14,7 +14,8 @@ RUN set -x \
 WORKDIR /root/warp/
 
 RUN set -x \
-    && rpm -ivh http://pkg.cloudflareclient.com/cloudflare-release-el8.rpm \
+    && curl -fsSl https://pkg.cloudflareclient.com/cloudflare-warp-ascii.repo | tee /etc/yum.repos.d/cloudflare-warp.repo \
+    && yum update -y \
     && yum install screen socat cloudflare-warp -y \
     && chmod +x run.sh \
     && screen -dmS warp warp-svc && sleep 3 \

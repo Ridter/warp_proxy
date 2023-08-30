@@ -31,7 +31,7 @@ function validate_host_port() {
 
 function show_container_log() {
     if [ ! -f $CONFIG_FILE ]; then
-        echo -e "${RED}Cannot find configuration file. Please run './proxy start' first.${NC}"
+        echo -e "${RED}Cannot find configuration file. Please run './proxy.sh start' first.${NC}"
         exit 1
     fi
 
@@ -59,7 +59,7 @@ function run_container() {
             "$IMAGE_NAME" \
             sh -c "$RUN"
 
-        echo -e "[+] Socks5 proxy started at ${GREEN} $HOST_PORT ${NC}, check log with command ${GREEN} './proxy log'${NC}."
+        echo -e "[+] Socks5 proxy started at ${GREEN} $HOST_PORT ${NC}, check log with command ${GREEN} './proxy.sh log'${NC}."
     else
         echo -e "[!] Docker container with name ${RED} $CONTAINER_NAME ${NC} is already running."
         echo -e "[+] Socks5 proxy started on port ${GREEN} $HOST_PORT ${NC}."

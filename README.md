@@ -15,8 +15,8 @@ chmod +x proxy.sh
 
 2. 运行socks5服务
 ```
-./proxy start  # 默认开放在 127.0.0.1:1088,更换时间为1小时。
-./proxy start  127.0.0.1:1088 10  
+./proxy.sh start  # 默认开放在 127.0.0.1:1088,更换时间为1小时。
+./proxy.sh start  127.0.0.1:1088 10  
 ```
 
 >其中 10 代表时间，将会间隔10分钟重新申请一个IP（IP有可能不更换）
@@ -25,12 +25,12 @@ chmod +x proxy.sh
 
 3. 停止服务
 ```
-./proxy stop
+./proxy.sh stop
 ```
 
 4. 查看运行日志
 ```
-./proxy log
+./proxy.sh log
 ```
 ![](assets/20230425160041.png)
 
