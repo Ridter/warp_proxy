@@ -63,14 +63,31 @@ function reconnect_warp() {
 
 function init_server(){
     process_status=$(pgrep -c 'socat')
-    # 如果未找到 socat 进程，输出 "a"
+    # 如果未找到 socat 进程，启动服务
     if [[ $process_status -eq 0 ]]; then
         screen -dmS warp warp-svc 
         screen -dmS socat socat TCP-LISTEN:1080,fork,reuseaddr TCP:127.0.0.1:40000 
+        
+        # 等待服务启动
+        log INFO "Starting services..."
+        while true; do
+            warp_status=$(pgrep -c 'warp-svc')
+            socat_status=$(pgrep -c 'socat')
+            
+            if [[ $warp_status -gt 0 && $socat_status -gt 0 ]]; then
+                log INFO "Services started successfully"
+                break
+            else
+                log WARN "Waiting for services to start..."
+                sleep 2
+            fi
+        done
     else
         echo "Server is already running"
     fi
     
+    warp-cli --accept-tos registration new
+    warp-cli --accept-tos mode proxy
 }
 
 # 检查是否有输入参数，如果没有，则使用默认的10分钟
